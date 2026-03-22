@@ -26,10 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${dmSerif.variable} ${dmSans.variable} antialiased`}
-      >
+    <html lang="en" className={`${dmSerif.variable} ${dmSans.variable}`}>
+      <body className="antialiased">
         <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
