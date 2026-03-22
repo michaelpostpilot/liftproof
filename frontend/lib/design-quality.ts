@@ -484,8 +484,12 @@ function computeAutocorrelation(
 
   if (autocorrs.length === 0) return 0.5; // fallback default
 
-  // Clamp to [0, 0.95] — negative autocorrelation is rare and usually noise
-  return Math.max(0, Math.min(0.95, mean(autocorrs)));
+  // Clamp to [0.2, 0.95]. Floor of 0.2 because:
+  // - Real-world geo data virtually always has positive autocorrelation
+  // - Negative/zero values come from small samples or synthetic data
+  // - At ρ=0 the formula degenerates to naive √(weeks) which overstates power
+  // - 0.2 is conservatively low for any real business data
+  return Math.max(0.2, Math.min(0.95, mean(autocorrs)));
 }
 
 function pearsonCorrelation(x: number[], y: number[]): number {
