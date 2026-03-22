@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { UploadCard } from "@/components/dashboard/upload-card";
 import type { Experiment, CsvUpload } from "@/types/database";
 
 export default async function DashboardPage() {
@@ -168,21 +168,7 @@ export default async function DashboardPage() {
         ) : (
           <div className="grid gap-3">
             {(uploads as CsvUpload[]).map((upload) => (
-              <Card key={upload.id}>
-                <CardContent className="py-3 flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">{upload.filename}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {upload.row_count?.toLocaleString()} rows
-                      {upload.geo_granularity && ` \u00B7 ${upload.geo_granularity}`}
-                      {upload.date_range_start && ` \u00B7 ${upload.date_range_start} to ${upload.date_range_end}`}
-                    </p>
-                  </div>
-                  <Badge variant={upload.validation_status === "valid" ? "default" : "secondary"}>
-                    {upload.validation_status}
-                  </Badge>
-                </CardContent>
-              </Card>
+              <UploadCard key={upload.id} upload={upload as CsvUpload} />
             ))}
           </div>
         )}
