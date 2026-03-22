@@ -64,15 +64,15 @@ export function TreatmentVsSyntheticChart({
                 <ReferenceArea
                   x1={formatDateLabel(dates[treatmentStartIndex])}
                   x2={formatDateLabel(dates[dates.length - 1])}
-                  fill="#00152a"
-                  fillOpacity={0.06}
+                  fill="#7A9E7E"
+                  fillOpacity={0.08}
                 />
               )}
 
               {/* Treatment start line */}
               <ReferenceLine
                 x={formatDateLabel(dates[treatmentStartIndex])}
-                stroke="#00152a"
+                stroke="#0B1D2E"
                 strokeDasharray="4 4"
                 label={{ value: "Treatment Start", position: "top", fontSize: 10 }}
               />
@@ -80,15 +80,15 @@ export function TreatmentVsSyntheticChart({
               <Line
                 type="monotone"
                 dataKey="treatment"
-                stroke="#00152a"
-                strokeWidth={2}
+                stroke="#7A9E7E"
+                strokeWidth={2.5}
                 dot={false}
                 name={`Actual (${kpiLabel})`}
               />
               <Line
                 type="monotone"
                 dataKey="synthetic"
-                stroke="#94a3b8"
+                stroke="#1A3A5C"
                 strokeWidth={2}
                 strokeDasharray="6 3"
                 dot={false}

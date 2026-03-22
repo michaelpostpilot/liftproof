@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, DM_Sans } from "next/font/google";
+import { DM_Sans, DM_Serif_Display, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const dmSerif = DM_Serif_Display({
+const dmSerifDisplay = DM_Serif_Display({
   variable: "--font-headline",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-accent-serif",
   subsets: ["latin"],
   weight: "400",
   style: ["normal", "italic"],
@@ -12,6 +18,11 @@ const dmSerif = DM_Serif_Display({
 
 const dmSans = DM_Sans({
   variable: "--font-body",
+  subsets: ["latin"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono-display",
   subsets: ["latin"],
 });
 
@@ -26,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSerif.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${dmSerifDisplay.variable} ${instrumentSerif.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased">
         <TooltipProvider>{children}</TooltipProvider>
       </body>

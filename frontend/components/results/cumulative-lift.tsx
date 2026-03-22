@@ -65,8 +65,8 @@ export function CumulativeLiftChart({
                   type="monotone"
                   dataKey="ciUpper"
                   stroke="none"
-                  fill="#00152a"
-                  fillOpacity={0.1}
+                  fill="#7A9E7E"
+                  fillOpacity={0.12}
                   name="95% CI Upper"
                 />
               )}
@@ -75,7 +75,7 @@ export function CumulativeLiftChart({
                   type="monotone"
                   dataKey="ciLower"
                   stroke="none"
-                  fill="#ffffff"
+                  fill="#F8F6F1"
                   fillOpacity={1}
                   name="95% CI Lower"
                 />
@@ -84,7 +84,7 @@ export function CumulativeLiftChart({
               <Line
                 type="monotone"
                 dataKey="lift"
-                stroke="#00152a"
+                stroke="#0B1D2E"
                 strokeWidth={2.5}
                 dot={false}
                 name="Cumulative Lift"

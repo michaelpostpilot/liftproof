@@ -22,10 +22,10 @@ export function SidebarNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg uppercase tracking-wider text-[11px] font-semibold transition-colors ${
+            className={`flex items-center gap-3 py-2.5 px-4 rounded-lg text-[14px] font-normal transition-colors ${
               isActive
-                ? "bg-[#00152a]/[0.07] text-[#00152a] border-l-2 border-[#00152a] -ml-px"
-                : "text-muted-foreground hover:text-[#00152a] hover:bg-[#00152a]/[0.03]"
+                ? "bg-[#E8F0E8] text-[#3D6B42] border-l-3 border-[#7A9E7E] font-medium"
+                : "text-[#5C5B56] hover:text-[#1A1A18] hover:bg-[#F8F6F1]"
             }`}
           >
             {item.label}

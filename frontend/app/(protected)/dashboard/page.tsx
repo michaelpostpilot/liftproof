@@ -22,7 +22,7 @@ export default async function DashboardPage() {
     <div className="space-y-12">
       <div className="flex items-end justify-between pb-8 border-b border-border/50">
         <div>
-          <h1 className="font-serif italic text-4xl text-[#00152a]">Dashboard</h1>
+          <h1 className="font-serif italic text-4xl text-[#0B1D2E]">Dashboard</h1>
           <p className="text-muted-foreground text-sm mt-1">
             Your experiments and data uploads
           </p>
@@ -32,25 +32,25 @@ export default async function DashboardPage() {
             <Button variant="outline" className="uppercase tracking-wider text-[11px] font-bold">Upload Data</Button>
           </Link>
           <Link href="/experiments/new">
-            <Button className="bg-gradient-to-r from-[#00152a] to-[#102a43] uppercase tracking-wider text-[11px] font-bold">New Experiment</Button>
+            <Button className="bg-[#0B1D2E] hover:bg-[#132D44] uppercase tracking-wider text-[11px] font-bold">New Experiment</Button>
           </Link>
         </div>
       </div>
 
       {/* Experiments */}
       <section>
-        <h2 className="font-serif text-3xl text-[#00152a] mb-6">Experiments</h2>
+        <h2 className="font-serif text-3xl text-[#0B1D2E] mb-6">Experiments</h2>
         {!experiments || experiments.length === 0 ? (
-          <div className="bg-white p-10 rounded-xl border border-border/60 shadow-sm space-y-8">
+          <div className="bg-[#EDE9E0] p-10 rounded-xl shadow-sm space-y-8">
             <div>
-              <h3 className="font-serif italic text-2xl text-[#00152a] mb-1">Welcome to LiftProof</h3>
+              <h3 className="font-serif italic text-2xl text-[#0B1D2E] mb-1">Welcome to LiftProof</h3>
               <p className="text-sm text-muted-foreground">
                 Measure the causal impact of your marketing in three steps
               </p>
             </div>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <span className="font-serif text-3xl text-[#00152a]/20 shrink-0 w-8">01</span>
+                <span className="font-serif text-3xl text-[#0B1D2E]/20 shrink-0 w-8">01</span>
                 <div>
                   <p className="font-semibold text-sm">Upload your data</p>
                   <p className="text-sm text-muted-foreground">
@@ -60,7 +60,7 @@ export default async function DashboardPage() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="font-serif text-3xl text-[#00152a]/20 shrink-0 w-8">02</span>
+                <span className="font-serif text-3xl text-[#0B1D2E]/20 shrink-0 w-8">02</span>
                 <div>
                   <p className="font-semibold text-sm">Design your experiment</p>
                   <p className="text-sm text-muted-foreground">
@@ -70,7 +70,7 @@ export default async function DashboardPage() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="font-serif text-3xl text-[#00152a]/20 shrink-0 w-8">03</span>
+                <span className="font-serif text-3xl text-[#0B1D2E]/20 shrink-0 w-8">03</span>
                 <div>
                   <p className="font-semibold text-sm">Get causal results</p>
                   <p className="text-sm text-muted-foreground">
@@ -82,7 +82,7 @@ export default async function DashboardPage() {
             </div>
             <div className="flex flex-col gap-4">
               <Link href="/upload">
-                <Button size="lg" className="bg-gradient-to-r from-[#00152a] to-[#102a43] uppercase tracking-wider text-[11px] font-bold">Upload Your First CSV</Button>
+                <Button size="lg" className="bg-[#0B1D2E] hover:bg-[#132D44] uppercase tracking-wider text-[11px] font-bold">Upload Your First CSV</Button>
               </Link>
               <div>
                 <p className="uppercase text-[10px] text-muted-foreground font-bold tracking-wider mb-2">Or try a sample dataset</p>
@@ -122,17 +122,22 @@ export default async function DashboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {(experiments as Experiment[]).map((exp) => (
               <Link key={exp.id} href={`/experiments/${exp.id}`}>
-                <div className="bg-white p-8 rounded-xl border border-border/60 shadow-sm group hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[200px]">
+                <div className={`bg-white p-8 rounded-xl border border-border/60 shadow-sm group hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between min-h-[200px] ${
+                  exp.status === "completed" ? "border-l-4 border-l-[#7A9E7E]" :
+                  exp.status === "failed" ? "border-l-4 border-l-[#E05D3A]" :
+                  exp.status === "running" ? "border-l-4 border-l-[#D4943A]" :
+                  "border-l-4 border-l-[#D4CFC4]"
+                }`}>
                   <div className="flex justify-between items-start">
                     <div className="space-y-1">
                       <StatusBadge status={exp.status} />
-                      <h3 className="font-serif text-xl text-[#00152a]">{exp.name}</h3>
+                      <h3 className="font-serif text-xl text-[#0B1D2E]">{exp.name}</h3>
                     </div>
                   </div>
                   <div className="flex gap-8 mt-auto pt-6 border-t border-border/40">
                     <div className="flex flex-col">
                       <span className="uppercase text-[10px] text-muted-foreground font-bold tracking-wider">Duration</span>
-                      <span className="text-sm font-semibold">{exp.treatment_start} &mdash; {exp.treatment_end}</span>
+                      <span className="text-sm font-semibold font-mono">{exp.treatment_start} &mdash; {exp.treatment_end}</span>
                     </div>
                     <div className="flex flex-col">
                       <span className="uppercase text-[10px] text-muted-foreground font-bold tracking-wider">KPI</span>
@@ -140,7 +145,7 @@ export default async function DashboardPage() {
                     </div>
                     <div className="flex flex-col">
                       <span className="uppercase text-[10px] text-muted-foreground font-bold tracking-wider">Geos</span>
-                      <span className="text-sm font-semibold">{exp.treatment_geos.length} treatment</span>
+                      <span className="text-sm font-semibold font-mono">{exp.treatment_geos.length} treatment</span>
                     </div>
                   </div>
                 </div>
@@ -152,7 +157,7 @@ export default async function DashboardPage() {
 
       {/* Uploads */}
       <section>
-        <h2 className="font-serif text-3xl text-[#00152a] mb-6">Data Uploads</h2>
+        <h2 className="font-serif text-3xl text-[#0B1D2E] mb-6">Data Uploads</h2>
         {!uploads || uploads.length === 0 ? (
           <p className="text-muted-foreground">
             No uploads yet.{" "}
@@ -220,15 +225,15 @@ export default async function DashboardPage() {
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    draft: "text-muted-foreground",
-    running: "text-[#00152a]",
-    completed: "text-[#44617d]",
-    failed: "text-destructive",
+    completed: "bg-[#E8F0E8] text-[#3D6B42]",
+    failed: "bg-[#FDEEEA] text-[#E05D3A]",
+    running: "bg-[#F5E6CC] text-[#96600A]",
+    draft: "bg-[#EDE9E0] text-[#8A8880]",
   };
 
   return (
-    <span className={`uppercase text-[10px] font-bold tracking-[0.1em] ${styles[status] || styles.draft}`}>
-      {status === "running" && <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#00152a] animate-pulse mr-1.5 align-middle" />}
+    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide uppercase ${styles[status] || styles.draft}`}>
+      {status === "running" && <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#96600A] animate-pulse mr-1.5" />}
       {status}
     </span>
   );

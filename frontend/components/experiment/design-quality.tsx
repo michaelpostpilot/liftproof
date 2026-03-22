@@ -13,7 +13,6 @@ import {
   Legend,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   assessDesignQuality,
   type Rating,
@@ -34,15 +33,21 @@ interface DesignQualityProps {
 }
 
 const DOT_COLORS: Record<Rating, string> = {
-  green: "bg-green-500",
-  amber: "bg-amber-500",
-  red: "bg-red-500",
+  green: "bg-[#7A9E7E]",
+  amber: "bg-[#D4943A]",
+  red: "bg-[#E05D3A]",
 };
 
-const BADGE_STYLES: Record<Rating, { variant: "default" | "secondary" | "destructive"; label: string }> = {
-  green: { variant: "default", label: "Strong" },
-  amber: { variant: "secondary", label: "Moderate" },
-  red: { variant: "destructive", label: "Weak" },
+const BADGE_CLASSES: Record<Rating, string> = {
+  green: "bg-[#E8F0E8] text-[#3D6B42]",
+  amber: "bg-[#F5E6CC] text-[#96600A]",
+  red: "bg-[#FDEEEA] text-[#E05D3A]",
+};
+
+const BADGE_LABELS: Record<Rating, string> = {
+  green: "Strong",
+  amber: "Moderate",
+  red: "Weak",
 };
 
 export function DesignQuality(props: DesignQualityProps) {
@@ -74,14 +79,14 @@ export function DesignQuality(props: DesignQualityProps) {
     ]
   );
 
-  const badgeStyle = BADGE_STYLES[result.overall];
-
   return (
     <Card>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">Design Quality</CardTitle>
-          <Badge variant={badgeStyle.variant}>{badgeStyle.label}</Badge>
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide uppercase ${BADGE_CLASSES[result.overall]}`}>
+            {BADGE_LABELS[result.overall]}
+          </span>
         </div>
         <p className="text-sm text-muted-foreground">{result.overallLabel}</p>
       </CardHeader>
@@ -134,15 +139,15 @@ export function DesignQuality(props: DesignQualityProps) {
                   type="monotone"
                   dataKey="treatment"
                   name="Treatment"
-                  stroke="#00152a"
-                  strokeWidth={1.5}
+                  stroke="#7A9E7E"
+                  strokeWidth={2}
                   dot={false}
                 />
                 <Line
                   type="monotone"
                   dataKey="control"
                   name="Control"
-                  stroke="#44617d"
+                  stroke="#1A3A5C"
                   strokeWidth={1.5}
                   strokeDasharray="5 3"
                   dot={false}
@@ -162,7 +167,7 @@ export function DesignQuality(props: DesignQualityProps) {
               </div>
               <Link
                 href={`/power-calculator?from=design-quality&nTreat=${result.powerCalcParams.nTreatment}&nControl=${result.powerCalcParams.nControl}&weeklyAvg=${result.powerCalcParams.weeklyAvg}&cv=${result.powerCalcParams.cv}&weeks=${result.powerCalcParams.durationWeeks}`}
-                className="text-xs font-semibold text-[#00152a] hover:underline whitespace-nowrap ml-3"
+                className="text-xs font-semibold text-[#0B1D2E] hover:underline whitespace-nowrap ml-3"
               >
                 Cross-check in Power Calculator &rarr;
               </Link>

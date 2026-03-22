@@ -19,13 +19,10 @@ export default async function ProtectedLayout({
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <aside className="w-64 fixed left-0 top-0 h-screen bg-[#f4f3f5] border-r border-border/40 flex flex-col py-6 z-50">
+      <aside className="w-64 fixed left-0 top-0 h-screen bg-white border-r border-[rgba(0,0,0,0.08)] flex flex-col py-6 z-50">
         <div className="px-6 mb-10">
           <Link href="/dashboard">
-            <h1 className="font-serif text-2xl text-[#00152a]">LiftProof</h1>
-            <p className="uppercase tracking-wider text-[10px] font-semibold text-muted-foreground mt-0.5">
-              Enterprise Analytics
-            </p>
+            <h1 className="font-serif text-2xl text-[#0B1D2E]">LiftProof</h1>
           </Link>
         </div>
 
@@ -40,7 +37,7 @@ export default async function ProtectedLayout({
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 ml-64 overflow-auto bg-[#faf9fb]">
+      <main className="flex-1 ml-64 overflow-auto bg-[#F8F6F1]">
         <div className="p-12">
           {children}
         </div>

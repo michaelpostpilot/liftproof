@@ -46,9 +46,9 @@ export function ProgressTracker({ steps, currentStep, onCancel }: ProgressTracke
       <CardContent className="py-8">
         <div className="max-w-md mx-auto space-y-6">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-50 mb-3">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#E8F0E8] mb-3">
               <svg
-                className="w-6 h-6 text-blue-600 animate-spin"
+                className="w-6 h-6 text-[#7A9E7E] animate-spin"
                 fill="none"
                 viewBox="0 0 24 24"
               >
@@ -83,9 +83,9 @@ export function ProgressTracker({ steps, currentStep, onCancel }: ProgressTracke
                   <span
                     className={
                       step.progress >= 1
-                        ? "text-green-600"
+                        ? "text-[#3D6B42]"
                         : step.step === currentStep
-                        ? "font-medium"
+                        ? "font-medium text-[#0B1D2E]"
                         : "text-muted-foreground"
                     }
                   >

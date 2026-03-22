@@ -18,19 +18,19 @@ export function MetricsSummary({ result }: MetricsSummaryProps) {
       <div
         className={`rounded-xl px-6 py-5 shadow-sm space-y-2 ${
           isSignificant && isPositive
-            ? "bg-green-50 border border-green-200"
+            ? "bg-[#E8F0E8] border border-[#7A9E7E]/30"
             : isSignificant
-              ? "bg-red-50 border border-red-200"
-              : "bg-yellow-50 border border-yellow-200"
+              ? "bg-[#FDEEEA] border border-[#E05D3A]/20"
+              : "bg-[#F5E6CC] border border-[#D4943A]/20"
         }`}
       >
         <div className="flex items-center justify-between">
           <p className={`text-xl font-serif font-bold ${
             isSignificant && isPositive
-              ? "text-green-800"
+              ? "text-[#3D6B42]"
               : isSignificant
-                ? "text-red-800"
-                : "text-yellow-800"
+                ? "text-[#E05D3A]"
+                : "text-[#96600A]"
           }`}>
             {isSignificant && isPositive
               ? "Your campaign drove measurable lift"
@@ -43,7 +43,7 @@ export function MetricsSummary({ result }: MetricsSummaryProps) {
           )}
         </div>
         <p className={`text-sm ${
-          isSignificant ? (isPositive ? "text-green-700" : "text-red-700") : "text-yellow-700"
+          isSignificant ? (isPositive ? "text-[#3D6B42]" : "text-[#E05D3A]") : "text-[#96600A]"
         }`}>
           {isSignificant && isPositive && result.lift_percent !== null && result.lift_amount !== null
             ? `Your treatment geos saw an estimated ${(result.lift_percent * 100).toFixed(1)}% lift (${result.lift_amount >= 0 ? "+" : ""}${Math.round(result.lift_amount).toLocaleString()} incremental units) compared to what would have happened without the campaign. This result is statistically significant (p = ${result.p_value?.toFixed(3)}), meaning it is very unlikely to be due to random chance.`
@@ -62,7 +62,7 @@ export function MetricsSummary({ result }: MetricsSummaryProps) {
               ? `${isPositive ? "+" : ""}${(result.lift_percent * 100).toFixed(1)}%`
               : "N/A"
           }
-          color={isPositive ? "text-green-600" : "text-red-600"}
+          color={isPositive ? "text-[#3D6B42]" : "text-[#E05D3A]"}
         />
         <MetricCard
           label="Lift Amount"
@@ -71,7 +71,7 @@ export function MetricsSummary({ result }: MetricsSummaryProps) {
               ? `${isPositive ? "+" : ""}$${Math.abs(result.lift_amount).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
               : "N/A"
           }
-          color={isPositive ? "text-green-600" : "text-red-600"}
+          color={isPositive ? "text-[#3D6B42]" : "text-[#E05D3A]"}
         />
         <MetricCard
           label="95% Confidence Interval"
@@ -85,7 +85,7 @@ export function MetricsSummary({ result }: MetricsSummaryProps) {
           <MetricCard
             label="iROAS"
             value={`${result.iroas.toFixed(1)}x`}
-            color="text-blue-600"
+            color="text-[#1A3A5C]"
           />
         )}
         {result.cpia !== null && (
@@ -122,13 +122,13 @@ export function MetricsSummary({ result }: MetricsSummaryProps) {
                     <span className="text-sm text-muted-foreground w-32 capitalize">
                       {model.replace(/_/g, " ")}
                     </span>
-                    <div className="flex-1 bg-muted rounded-full h-2.5">
+                    <div className="flex-1 bg-[#EDE9E0] rounded-full h-2.5">
                       <div
-                        className="bg-gradient-to-r from-[#00152a] to-[#44617d] h-2.5 rounded-full transition-all"
+                        className="bg-[#0B1D2E] h-2.5 rounded-full transition-all"
                         style={{ width: `${weight * 100}%` }}
                       />
                     </div>
-                    <span className="text-sm font-medium w-12 text-right">
+                    <span className="text-sm font-medium font-mono w-12 text-right">
                       {(weight * 100).toFixed(0)}%
                     </span>
                   </div>
@@ -156,7 +156,7 @@ function MetricCard({
     <Card>
       <CardContent className="py-5 px-5">
         <p className="text-xs uppercase tracking-wider font-semibold text-muted-foreground">{label}</p>
-        <p className={`text-3xl font-bold tracking-tight mt-1 ${color || ""}`}>{value}</p>
+        <p className={`text-3xl font-bold font-mono tracking-tight mt-1 ${color || ""}`}>{value}</p>
         {subtitle && (
           <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
         )}

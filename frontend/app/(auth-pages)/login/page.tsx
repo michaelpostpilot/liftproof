@@ -44,10 +44,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#f4f3f5]">
-      <Card className="w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-[#F8F6F1]">
+      <Card className="w-full max-w-md shadow-sm">
         <CardHeader className="text-center">
-          <CardTitle className="font-serif italic text-2xl text-[#00152a]">Sign in to LiftProof</CardTitle>
+          <CardTitle className="font-serif italic text-2xl text-[#0B1D2E]">Sign in to LiftProof</CardTitle>
           <CardDescription>
             Measure the true incremental impact of your marketing
           </CardDescription>
@@ -79,17 +79,17 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600">{error}</p>
+              <p className="text-sm text-[#E05D3A]">{error}</p>
             )}
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full bg-[#0B1D2E] hover:bg-[#132D44]" disabled={loading}>
               {loading ? "Signing in..." : "Sign in"}
             </Button>
           </form>
 
           <p className="text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link href="/signup" className="text-blue-600 hover:underline">
+            <Link href="/signup" className="text-[#0B1D2E] font-medium hover:underline">
               Sign up
             </Link>
           </p>

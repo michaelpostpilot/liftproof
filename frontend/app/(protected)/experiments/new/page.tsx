@@ -171,15 +171,15 @@ export default function NewExperimentPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="font-serif italic text-4xl text-[#00152a]">New Experiment</h1>
+        <h1 className="font-serif italic text-4xl text-[#0B1D2E]">New Experiment</h1>
         <p className="text-muted-foreground">
           Design a geo-holdout experiment to measure the causal impact of your marketing.
         </p>
       </div>
 
       {/* How it works */}
-      <div className="rounded-lg border bg-stone-50 px-5 py-4 space-y-3">
-        <p className="font-semibold text-sm">How geo testing works</p>
+      <div className="rounded-xl bg-[#EDE9E0] px-6 py-5 space-y-3">
+        <p className="font-semibold text-sm text-[#0B1D2E]">How geo testing works</p>
         <div className="grid sm:grid-cols-3 gap-4 text-sm text-muted-foreground">
           <div className="space-y-1">
             <p className="font-medium text-foreground">1. Pick treatment geos</p>
@@ -311,13 +311,13 @@ export default function NewExperimentPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Recommend Split */}
-                <div className="rounded-lg border bg-blue-50 border-blue-200 p-4 space-y-3">
+                <div className="rounded-xl bg-[#E8F0E8] border border-[#7A9E7E]/20 p-4 space-y-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-blue-900">
+                      <p className="text-sm font-medium text-[#3D6B42]">
                         Not sure which geos to assign?
                       </p>
-                      <p className="text-xs text-blue-700 mt-0.5">
+                      <p className="text-xs text-[#5C5B56] mt-0.5">
                         LiftProof will analyze your data and recommend the split
                         that maximizes pre-period fit quality.
                       </p>
@@ -374,7 +374,7 @@ export default function NewExperimentPage() {
                     </Button>
                   </div>
                   {!prePeriodStart || !prePeriodEnd ? (
-                    <p className="text-xs text-blue-600">
+                    <p className="text-xs text-[#5C5B56]">
                       Set the pre-period dates below first, then come back to get a recommendation.
                     </p>
                   ) : null}
@@ -399,9 +399,9 @@ export default function NewExperimentPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800 space-y-1">
-                  <p className="font-medium">Tips for setting time periods</p>
-                  <ul className="list-disc pl-4 space-y-0.5 text-blue-700">
+                <div className="rounded-xl bg-[#EDE9E0] px-4 py-3 text-sm text-[#5C5B56] space-y-1">
+                  <p className="font-medium text-[#0B1D2E]">Tips for setting time periods</p>
+                  <ul className="list-disc pl-4 space-y-0.5 text-[#5C5B56]">
                     <li>The <strong>pre-period</strong> should be at least 4&ndash;8 weeks before treatment started &mdash; ideally longer</li>
                     <li>Longer pre-periods give the model more baseline data to learn from</li>
                     <li>The <strong>treatment period</strong> is when your marketing intervention was active</li>
@@ -492,7 +492,7 @@ export default function NewExperimentPage() {
             )}
 
           {error && (
-            <div className="bg-red-50 text-red-700 rounded-lg px-4 py-3 text-sm">
+            <div className="bg-[#FDEEEA] text-[#E05D3A] rounded-lg px-4 py-3 text-sm border border-[#E05D3A]/20">
               {error}
             </div>
           )}

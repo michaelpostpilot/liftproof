@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MetricsSummary } from "@/components/results/metrics-summary";
 import { TreatmentVsSyntheticChart } from "@/components/results/treatment-vs-synthetic";
@@ -188,7 +187,7 @@ export default function ExperimentDetailPage() {
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <h1 className="font-serif italic text-4xl text-[#00152a]">{experiment.name}</h1>
+            <h1 className="font-serif italic text-4xl text-[#0B1D2E]">{experiment.name}</h1>
             <StatusBadge status={experiment.status} />
           </div>
           <p className="text-muted-foreground">
@@ -244,27 +243,27 @@ export default function ExperimentDetailPage() {
         <CardContent className="py-5 px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>
-              <p className="text-xs uppercase tracking-wider font-semibold text-muted-foreground">Pre-Period</p>
-              <p className="font-semibold text-[#00152a] mt-0.5">{experiment.pre_period_start} to {experiment.pre_period_end}</p>
+              <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Pre-Period</p>
+              <p className="font-semibold text-[#0B1D2E] mt-0.5 font-mono text-sm">{experiment.pre_period_start} to {experiment.pre_period_end}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wider font-semibold text-muted-foreground">Treatment Period</p>
-              <p className="font-semibold text-[#00152a] mt-0.5">{experiment.treatment_start} to {experiment.treatment_end}</p>
+              <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Treatment Period</p>
+              <p className="font-semibold text-[#0B1D2E] mt-0.5 font-mono text-sm">{experiment.treatment_start} to {experiment.treatment_end}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wider font-semibold text-muted-foreground">Treatment Geos</p>
-              <p className="font-semibold text-[#00152a] mt-0.5">{experiment.treatment_geos.join(", ")}</p>
+              <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Treatment Geos</p>
+              <p className="font-semibold text-[#0B1D2E] mt-0.5 text-sm">{experiment.treatment_geos.join(", ")}</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wider font-semibold text-muted-foreground">Geo Granularity</p>
-              <p className="font-semibold text-[#00152a] mt-0.5 capitalize">{experiment.geo_granularity}</p>
+              <p className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">Geo Granularity</p>
+              <p className="font-semibold text-[#0B1D2E] mt-0.5 capitalize text-sm">{experiment.geo_granularity}</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {error && (
-        <div className="bg-red-50 text-red-700 rounded-lg px-4 py-3 text-sm">
+        <div className="bg-[#FDEEEA] text-[#E05D3A] rounded-lg px-4 py-3 text-sm border border-[#E05D3A]/20">
           {error}
         </div>
       )}
@@ -278,7 +277,7 @@ export default function ExperimentDetailPage() {
                 ? "The previous analysis failed. You can retry."
                 : "Your experiment is configured. Run the analysis to get results."}
             </p>
-            <Button size="lg" onClick={runAnalysis} className="bg-gradient-to-r from-[#00152a] to-[#102a43] text-white px-10 rounded-xl uppercase tracking-wider text-[11px] font-bold">
+            <Button size="lg" onClick={runAnalysis} className="bg-[#0B1D2E] hover:bg-[#132D44] text-white px-10 rounded-xl uppercase tracking-wider text-[11px] font-bold">
               {experiment.status === "failed" ? "Retry Analysis" : "Run Analysis"}
             </Button>
           </CardContent>
@@ -358,12 +357,17 @@ export default function ExperimentDetailPage() {
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const config: Record<string, { variant: "default" | "secondary" | "destructive" | "outline"; label: string }> = {
-    draft: { variant: "secondary", label: "Draft" },
-    running: { variant: "outline", label: "Running" },
-    completed: { variant: "default", label: "Completed" },
-    failed: { variant: "destructive", label: "Failed" },
+  const styles: Record<string, string> = {
+    completed: "bg-[#E8F0E8] text-[#3D6B42]",
+    failed: "bg-[#FDEEEA] text-[#E05D3A]",
+    running: "bg-[#F5E6CC] text-[#96600A]",
+    draft: "bg-[#EDE9E0] text-[#8A8880]",
   };
-  const c = config[status] || config.draft;
-  return <Badge variant={c.variant}>{c.label}</Badge>;
+
+  return (
+    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide uppercase ${styles[status] || styles.draft}`}>
+      {status === "running" && <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#96600A] animate-pulse mr-1.5" />}
+      {status}
+    </span>
+  );
 }

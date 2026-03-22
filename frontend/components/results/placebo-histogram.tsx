@@ -46,30 +46,30 @@ export function PlaceboHistogram({
                 labelFormatter={(label) => `Effect: ${label}`}
               />
 
-              <Bar dataKey="count" fill="#c8d5e2" radius={[2, 2, 0, 0]} />
+              <Bar dataKey="count" fill="#D4CFC4" radius={[2, 2, 0, 0]} />
 
               {/* Observed effect line */}
               <ReferenceLine
                 x={findClosestBinLabel(bins, observedEffect)}
-                stroke="#ef4444"
+                stroke="#E05D3A"
                 strokeWidth={2}
                 label={{
                   value: `Observed: ${observedEffect.toFixed(0)}`,
                   position: "top",
-                  fill: "#ef4444",
+                  fill: "#E05D3A",
                   fontSize: 11,
                 }}
               />
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="mt-3 rounded-lg bg-stone-50 border px-4 py-3 text-xs text-muted-foreground space-y-1">
-          <p className="font-medium text-foreground">What am I looking at?</p>
+        <div className="mt-3 rounded-xl bg-[#EDE9E0] px-4 py-3 text-xs text-[#5C5B56] space-y-1">
+          <p className="font-medium text-[#0B1D2E]">What am I looking at?</p>
           <p>
-            Each grey bar shows the &ldquo;lift&rdquo; LiftProof measured when
+            Each bar shows the &ldquo;lift&rdquo; LiftProof measured when
             it pretended random geos were the treatment group (a placebo test).
-            The <span className="text-red-500 font-semibold">red line</span> is
-            your actual observed effect. If it sits far outside the grey bars,
+            The <span className="text-[#E05D3A] font-semibold">red line</span> is
+            your actual observed effect. If it sits far outside the bars,
             your result is unlikely to be random chance &mdash; i.e., it is
             statistically significant.
           </p>

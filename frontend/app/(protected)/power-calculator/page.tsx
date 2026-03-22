@@ -151,16 +151,16 @@ function PowerGauge({ power }: { power: number }) {
   const pct = Math.round(power * 100);
   const color =
     pct >= 80
-      ? "text-green-600"
+      ? "text-[#3D6B42]"
       : pct >= 60
-        ? "text-yellow-600"
-        : "text-red-600";
-  const bgColor =
+        ? "text-[#96600A]"
+        : "text-[#E05D3A]";
+  const arcColor =
     pct >= 80
-      ? "bg-green-500"
+      ? "text-[#7A9E7E]"
       : pct >= 60
-        ? "bg-yellow-500"
-        : "bg-red-500";
+        ? "text-[#D4943A]"
+        : "text-[#E05D3A]";
   const label =
     pct >= 80 ? "Strong" : pct >= 60 ? "Marginal" : "Underpowered";
 
@@ -175,7 +175,7 @@ function PowerGauge({ power }: { power: number }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="10"
-            className="text-stone-200"
+            className="text-[#EDE9E0]"
             strokeDasharray={`${Math.PI * 100}`}
             strokeDashoffset={`${Math.PI * 100 * 0.25}`}
             strokeLinecap="round"
@@ -188,7 +188,7 @@ function PowerGauge({ power }: { power: number }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="10"
-            className={bgColor}
+            className={arcColor}
             strokeDasharray={`${Math.PI * 100}`}
             strokeDashoffset={`${Math.PI * 100 * (1 - pct / 100 * 0.75)}`}
             strokeLinecap="round"
@@ -196,17 +196,17 @@ function PowerGauge({ power }: { power: number }) {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className={`text-3xl font-extrabold ${color}`}>{pct}%</span>
+          <span className={`text-3xl font-extrabold font-mono ${color}`}>{pct}%</span>
         </div>
       </div>
       <div>
         <span
           className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
             pct >= 80
-              ? "bg-green-100 text-green-800"
+              ? "bg-[#E8F0E8] text-[#3D6B42]"
               : pct >= 60
-                ? "bg-yellow-100 text-yellow-800"
-                : "bg-red-100 text-red-800"
+                ? "bg-[#F5E6CC] text-[#96600A]"
+                : "bg-[#FDEEEA] text-[#E05D3A]"
           }`}
         >
           {label}
@@ -243,7 +243,7 @@ function SliderField({
           {tooltip && (
             <Tooltip>
               <TooltipTrigger
-                className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-stone-200 text-stone-500 text-[10px] font-bold cursor-help leading-none"
+                className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#EDE9E0] text-[#8A8880] text-[10px] font-bold cursor-help leading-none"
               >
                 ?
               </TooltipTrigger>
@@ -320,7 +320,7 @@ export default function PowerCalculatorPage() {
   return (
     <div className="space-y-6 max-w-4xl">
       <div>
-        <h1 className="font-serif italic text-4xl text-[#00152a]">
+        <h1 className="font-serif italic text-4xl text-[#0B1D2E]">
           Power Calculator
         </h1>
         <p className="text-muted-foreground mt-1">
@@ -330,7 +330,7 @@ export default function PowerCalculatorPage() {
       </div>
 
       {fromDesignQuality && (
-        <div className="bg-blue-50 text-blue-800 text-sm p-4 rounded-lg">
+        <div className="bg-[#EDE9E0] text-[#5C5B56] text-sm p-4 rounded-lg">
           Parameters auto-filled from your experiment&apos;s actual data. The CV and weekly average are computed from pre-period within-geo weekly variation. Adjust &ldquo;Expected lift&rdquo; to see what effect sizes you can detect.
         </div>
       )}
@@ -437,13 +437,13 @@ export default function PowerCalculatorPage() {
                 <span className="text-muted-foreground">
                   Min. detectable effect
                 </span>
-                <span className="font-semibold">{result.mde.toFixed(1)}%</span>
+                <span className="font-semibold font-mono">{result.mde.toFixed(1)}%</span>
               </div>
               <div className="flex justify-between py-2 border-b">
                 <span className="text-muted-foreground">
                   Expected incremental
                 </span>
-                <span className="font-semibold">
+                <span className="font-semibold font-mono">
                   {Math.round(result.expectedIncrementalTotal).toLocaleString()}{" "}
                   conversions
                 </span>
@@ -452,7 +452,7 @@ export default function PowerCalculatorPage() {
                 <span className="text-muted-foreground">
                   Treatment total
                 </span>
-                <span className="font-semibold">
+                <span className="font-semibold font-mono">
                   {Math.round(
                     result.totalTreatmentConversions
                   ).toLocaleString()}
@@ -460,7 +460,7 @@ export default function PowerCalculatorPage() {
               </div>
               <div className="flex justify-between py-2 border-b">
                 <span className="text-muted-foreground">Control total</span>
-                <span className="font-semibold">
+                <span className="font-semibold font-mono">
                   {Math.round(result.totalControlConversions).toLocaleString()}
                 </span>
               </div>
@@ -470,10 +470,10 @@ export default function PowerCalculatorPage() {
             <div
               className={`p-3 rounded-lg text-sm ${
                 result.power >= 0.8
-                  ? "bg-green-50 text-green-800"
+                  ? "bg-[#E8F0E8] text-[#3D6B42]"
                   : result.power >= 0.6
-                    ? "bg-yellow-50 text-yellow-800"
-                    : "bg-red-50 text-red-800"
+                    ? "bg-[#F5E6CC] text-[#96600A]"
+                    : "bg-[#FDEEEA] text-[#E05D3A] border-l-4 border-[#E05D3A]"
               }`}
             >
               {result.power >= 0.8 ? (

@@ -173,7 +173,7 @@ export default function UploadPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
-        <h1 className="font-serif italic text-4xl text-[#00152a]">Upload Data</h1>
+        <h1 className="font-serif italic text-4xl text-[#0B1D2E]">Upload Data</h1>
         <p className="text-muted-foreground">
           Upload a CSV with one row per day per geographic region. See the format guide below.
         </p>
@@ -185,19 +185,19 @@ export default function UploadPage() {
           const stepIdx = { upload: 0, preview: 1, confirm: 2, uploading: 3, success: 3 }[step];
           return (
             <div key={label} className="flex items-center gap-2">
-              {i > 0 && <div className="w-8 h-px bg-gray-300" />}
+              {i > 0 && <div className="w-8 h-px bg-[#D4CFC4]" />}
               <div
                 className={`flex items-center gap-1.5 ${
-                  i <= stepIdx ? "text-blue-600 font-medium" : "text-gray-400"
+                  i <= stepIdx ? "text-[#3D6B42] font-medium" : "text-[#8A8880]"
                 }`}
               >
                 <div
                   className={`h-6 w-6 rounded-full flex items-center justify-center text-xs ${
                     i < stepIdx
-                      ? "bg-blue-600 text-white"
+                      ? "bg-[#7A9E7E] text-white"
                       : i === stepIdx
-                      ? "border-2 border-blue-600 text-blue-600"
-                      : "border border-gray-300 text-gray-400"
+                      ? "border-2 border-[#7A9E7E] text-[#3D6B42]"
+                      : "border border-[#D4CFC4] text-[#8A8880]"
                   }`}
                 >
                   {i < stepIdx ? "\u2713" : i + 1}
@@ -210,7 +210,7 @@ export default function UploadPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 text-red-700 rounded-lg px-4 py-3 text-sm">
+        <div className="bg-[#FDEEEA] text-[#E05D3A] rounded-lg px-4 py-3 text-sm border border-[#E05D3A]/20">
           {error}
         </div>
       )}
@@ -297,8 +297,8 @@ export default function UploadPage() {
       {step === "success" && (
         <Card>
           <CardContent className="py-12 text-center space-y-4">
-            <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-              <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="h-12 w-12 rounded-full bg-[#E8F0E8] flex items-center justify-center mx-auto">
+              <svg className="h-6 w-6 text-[#3D6B42]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
