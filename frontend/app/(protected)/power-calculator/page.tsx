@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { useCopilot } from "@/components/copilot/copilot-provider";
 import {
   Card,
   CardContent,
@@ -302,6 +303,11 @@ export default function PowerCalculatorPage() {
   const [alpha, setAlpha] = useState(0.05);
   const fromDesignQuality = searchParams.get("from") === "design-quality";
   const [showAdvanced, setShowAdvanced] = useState(fromDesignQuality);
+  const { setContext } = useCopilot();
+
+  useEffect(() => {
+    setContext({ page: "Power Calculator" });
+  }, [setContext]);
 
   const result = useMemo(
     () =>

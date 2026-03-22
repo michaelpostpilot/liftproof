@@ -11,6 +11,7 @@ import { TreatmentVsSyntheticChart } from "@/components/results/treatment-vs-syn
 import { CumulativeLiftChart } from "@/components/results/cumulative-lift";
 import { PlaceboHistogram } from "@/components/results/placebo-histogram";
 import { ProgressTracker } from "@/components/results/progress-tracker";
+import { useCopilot } from "@/components/copilot/copilot-provider";
 import type { Experiment, ExperimentResult } from "@/types/database";
 
 interface ProgressStep {
@@ -31,6 +32,41 @@ export default function ExperimentDetailPage() {
   const [currentStep, setCurrentStep] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [abortController, setAbortController] = useState<AbortController | null>(null);
+  const { setContext } = useCopilot();
+
+  // Update copilot context when experiment/results change
+  useEffect(() => {
+    if (experiment) {
+      setContext({
+        page: "Experiment Results",
+        experiment: {
+          name: experiment.name,
+          status: experiment.status,
+          primary_kpi: experiment.primary_kpi,
+          treatment_geos: experiment.treatment_geos,
+          control_geos: experiment.control_geos,
+          pre_period_start: experiment.pre_period_start,
+          pre_period_end: experiment.pre_period_end,
+          treatment_start: experiment.treatment_start,
+          treatment_end: experiment.treatment_end,
+          geo_granularity: experiment.geo_granularity,
+        },
+        results: result
+          ? {
+              lift_percent: result.lift_percent,
+              lift_amount: result.lift_amount,
+              p_value: result.p_value,
+              ci_lower: result.ci_lower,
+              ci_upper: result.ci_upper,
+              pre_period_fit_rmse: result.pre_period_fit_rmse,
+              iroas: result.iroas,
+              cpia: result.cpia,
+              model_weights: result.model_weights,
+            }
+          : undefined,
+      });
+    }
+  }, [experiment, result, setContext]);
 
   // Fetch experiment and results
   const fetchData = useCallback(async () => {

@@ -18,6 +18,7 @@ import {
 import { GeoSelector } from "@/components/experiment/geo-selector";
 import { DesignQuality } from "@/components/experiment/design-quality";
 import { InfoTooltip } from "@/components/shared/info-tooltip";
+import { useCopilot } from "@/components/copilot/copilot-provider";
 import type { CsvUpload } from "@/types/database";
 import Papa from "papaparse";
 
@@ -115,6 +116,37 @@ export default function NewExperimentPage() {
   }, [selectedUpload]);
 
   const controlGeos = availableGeos.filter((g) => !treatmentGeos.includes(g));
+
+  const { setContext } = useCopilot();
+
+  // Set copilot context
+  useEffect(() => {
+    setContext({
+      page: "New Experiment",
+      experiment: selectedUpload
+        ? {
+            primary_kpi: primaryKpi,
+            treatment_geos: treatmentGeos,
+            control_geos: controlGeos,
+            pre_period_start: prePeriodStart,
+            pre_period_end: prePeriodEnd,
+            treatment_start: treatmentStart,
+            treatment_end: treatmentEnd,
+            geo_granularity: selectedUpload.geo_granularity,
+          }
+        : undefined,
+    });
+  }, [
+    selectedUpload,
+    primaryKpi,
+    treatmentGeos,
+    controlGeos,
+    prePeriodStart,
+    prePeriodEnd,
+    treatmentStart,
+    treatmentEnd,
+    setContext,
+  ]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

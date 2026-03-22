@@ -79,7 +79,7 @@ export default function LandingPage() {
           <div className="absolute w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(43,108,176,0.08)_0%,transparent_70%)] -top-10 -right-16 z-0 pointer-events-none" />
           <div className="relative z-10 w-[420px] bg-white border border-[#E2E8F0] rounded-2xl p-8 shadow-[0_4px_32px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.02)]">
             <div className="flex items-center justify-between mb-6">
-              <span className="text-[13px] font-medium text-[#0B1D2C]">Meta Ads — Q1 Holdout Test</span>
+              <span className="text-[13px] font-medium text-[#0B1D2C]">CTV Ads — Q1 Holdout Test</span>
               <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#E6FFFA] text-[#276749]">
                 Significant
               </span>

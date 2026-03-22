@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import health, analysis, export, recommend
+from app.routers import health, analysis, export, recommend, copilot
 
 app = FastAPI(
     title="LiftProof API",
@@ -26,3 +26,4 @@ app.include_router(health.router)
 app.include_router(analysis.router)
 app.include_router(export.router)
 app.include_router(recommend.router)
+app.include_router(copilot.router)
