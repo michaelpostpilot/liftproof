@@ -17,13 +17,14 @@ export function UploadCard({ upload }: { upload: CsvUpload }) {
     const supabase = createClient();
 
     try {
-      // Delete from storage if storage_path exists
+      // Try to delete from storage (may fail if no DELETE policy — that's OK)
       if (upload.storage_path) {
-        await supabase.storage.from("csv-uploads").remove([upload.storage_path]);
+        await supabase.storage.from("csv-uploads").remove([upload.storage_path]).catch(() => {});
       }
 
-      // Delete the database record
-      await supabase.from("csv_uploads").delete().eq("id", upload.id);
+      // Delete the database record (this is what matters)
+      const { error } = await supabase.from("csv_uploads").delete().eq("id", upload.id);
+      if (error) throw error;
 
       // Refresh the page to reflect changes
       router.refresh();
