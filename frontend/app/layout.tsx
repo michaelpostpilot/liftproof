@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Newsreader, Manrope } from "next/font/google";
+import { DM_Serif_Display, DM_Sans } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const newsreader = Newsreader({
+const dmSerif = DM_Serif_Display({
   variable: "--font-headline",
   subsets: ["latin"],
+  weight: "400",
   style: ["normal", "italic"],
 });
 
-const manrope = Manrope({
+const dmSans = DM_Sans({
   variable: "--font-body",
   subsets: ["latin"],
 });
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${newsreader.variable} ${manrope.variable} antialiased`}
+        className={`${dmSerif.variable} ${dmSans.variable} antialiased`}
       >
         <TooltipProvider>{children}</TooltipProvider>
       </body>
