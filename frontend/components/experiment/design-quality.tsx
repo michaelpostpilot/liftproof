@@ -162,11 +162,11 @@ export function DesignQuality(props: DesignQualityProps) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs text-muted-foreground">
-                  Estimated from data: <span className="font-mono">{result.powerCalcParams.weeklyAvg.toLocaleString()}</span> avg weekly conversions/geo, <span className="font-mono">{result.powerCalcParams.cv.toFixed(2)}</span> weekly CV
+                  Estimated from data: <span className="font-mono">{result.powerCalcParams.weeklyAvg.toLocaleString()}</span> avg weekly conversions/geo, <span className="font-mono">{result.powerCalcParams.cv.toFixed(2)}</span> weekly CV, <span className="font-mono">{result.powerCalcParams.autocorrelation.toFixed(2)}</span> autocorrelation
                 </p>
               </div>
               <Link
-                href={`/power-calculator?from=design-quality&nTreat=${result.powerCalcParams.nTreatment}&nControl=${result.powerCalcParams.nControl}&weeklyAvg=${result.powerCalcParams.weeklyAvg}&cv=${result.powerCalcParams.cv}&weeks=${result.powerCalcParams.durationWeeks}`}
+                href={`/power-calculator?from=design-quality&nTreat=${result.powerCalcParams.nTreatment}&nControl=${result.powerCalcParams.nControl}&weeklyAvg=${result.powerCalcParams.weeklyAvg}&cv=${result.powerCalcParams.cv}&weeks=${result.powerCalcParams.durationWeeks}&rho=${result.powerCalcParams.autocorrelation}`}
                 className="text-xs font-semibold text-[#0B1D2E] hover:underline whitespace-nowrap ml-3"
               >
                 Cross-check in Power Calculator &rarr;

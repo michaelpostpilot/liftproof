@@ -20,6 +20,7 @@ export interface PowerCalcParams {
   weeklyAvg: number;
   cv: number;
   durationWeeks: number;
+  autocorrelation: number;
 }
 
 export interface PrePeriodChartPoint {
@@ -213,9 +214,10 @@ function computeMDE(input: AssessInput): number | null {
 
     // z = 1.96 (95% CI) + 0.84 (80% power) = 2.8
     const z = 2.8;
-    // Adjust for autocorrelation (ρ=0.5 default): T_eff = T × (1-ρ)/(1+ρ)
-    const autocorrelation = 0.5;
-    const effectiveWeeks = Math.max(0.5, tWeeks * (1 - autocorrelation) / (1 + autocorrelation));
+    // Compute autocorrelation from actual data instead of using a fixed default
+    const rho = computeAutocorrelation(geoWeekly, allGeos);
+    // Adjust for autocorrelation: T_eff = T × (1-ρ)/(1+ρ)
+    const effectiveWeeks = Math.max(0.5, tWeeks * (1 - rho) / (1 + rho));
     const mdePercent = z * weeklyCV * Math.sqrt(1 / nTreat + 1 / nControl) / Math.sqrt(effectiveWeeks) * 100;
 
     return Math.abs(mdePercent);
@@ -434,6 +436,7 @@ function computePowerCalcParams(input: AssessInput): PowerCalcParams | null {
     const avgWeekly = Math.round(mean(geoWeeklyMeans));
     const treatDays = countDaysBetween(input.treatmentStart, input.treatmentEnd);
     const durationWeeks = Math.max(1, Math.round(treatDays / 7));
+    const rho = computeAutocorrelation(geoWeekly, allGeos);
 
     return {
       nTreatment: input.treatmentGeos.length,
@@ -441,10 +444,48 @@ function computePowerCalcParams(input: AssessInput): PowerCalcParams | null {
       weeklyAvg: avgWeekly,
       cv: Math.round(avgCV * 100) / 100,
       durationWeeks,
+      autocorrelation: Math.round(rho * 100) / 100,
     };
   } catch {
     return null;
   }
+}
+
+/**
+ * Compute average lag-1 autocorrelation across geos from weekly data.
+ * For each geo, correlates its weekly values with the same values shifted by 1 week.
+ * Returns the mean autocorrelation, clamped to [0, 0.95].
+ */
+function computeAutocorrelation(
+  geoWeekly: Record<string, Record<number, number>>,
+  geos: string[]
+): number {
+  const autocorrs: number[] = [];
+
+  for (const geo of geos) {
+    const weeks = geoWeekly[geo];
+    if (!weeks) continue;
+
+    // Sort week numbers and get values in order
+    const weekNums = Object.keys(weeks).map(Number).sort((a, b) => a - b);
+    if (weekNums.length < 4) continue; // need enough data points
+
+    const values = weekNums.map((w) => weeks[w]);
+
+    // Lag-1 autocorrelation: corr(x[0..n-2], x[1..n-1])
+    const x = values.slice(0, -1);
+    const y = values.slice(1);
+    const r = pearsonCorrelation(x, y);
+
+    if (!isNaN(r) && isFinite(r)) {
+      autocorrs.push(r);
+    }
+  }
+
+  if (autocorrs.length === 0) return 0.5; // fallback default
+
+  // Clamp to [0, 0.95] — negative autocorrelation is rare and usually noise
+  return Math.max(0, Math.min(0.95, mean(autocorrs)));
 }
 
 function pearsonCorrelation(x: number[], y: number[]): number {

@@ -309,7 +309,7 @@ export default function PowerCalculatorPage() {
   const [durationWeeks, setDurationWeeks] = useState(paramNum("weeks", 4));
   const [cv, setCv] = useState(paramNum("cv", 0.15));
   const [alpha, setAlpha] = useState(0.05);
-  const [autocorrelation, setAutocorrelation] = useState(0.5);
+  const [autocorrelation, setAutocorrelation] = useState(paramNum("rho", 0.5));
   const fromDesignQuality = searchParams.get("from") === "design-quality";
   const [showAdvanced, setShowAdvanced] = useState(fromDesignQuality);
   const { setContext } = useCopilot();
