@@ -213,7 +213,10 @@ function computeMDE(input: AssessInput): number | null {
 
     // z = 1.96 (95% CI) + 0.84 (80% power) = 2.8
     const z = 2.8;
-    const mdePercent = z * weeklyCV * Math.sqrt(1 / nTreat + 1 / nControl) / Math.sqrt(tWeeks) * 100;
+    // Adjust for autocorrelation (ρ=0.5 default): T_eff = T × (1-ρ)/(1+ρ)
+    const autocorrelation = 0.5;
+    const effectiveWeeks = Math.max(0.5, tWeeks * (1 - autocorrelation) / (1 + autocorrelation));
+    const mdePercent = z * weeklyCV * Math.sqrt(1 / nTreat + 1 / nControl) / Math.sqrt(effectiveWeeks) * 100;
 
     return Math.abs(mdePercent);
   } catch {

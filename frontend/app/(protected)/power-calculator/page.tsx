@@ -107,16 +107,24 @@ function computePower(
   liftPct: number,
   durationWeeks: number,
   cv: number,
-  alpha: number
+  alpha: number,
+  autocorrelation: number = 0.5
 ): PowerResult {
   // Weekly std dev per geo (within-geo week-to-week noise)
   const sigmaWeekly = cv * weeklyAvg;
 
+  // Effective independent weeks, adjusted for autocorrelation.
+  // Weekly geo data is serially correlated (ρ ≈ 0.3–0.7), so T weeks
+  // of data yields fewer than T independent observations.
+  // Formula: T_eff = T × (1 − ρ) / (1 + ρ)  [standard time-series result]
+  const effectiveWeeks =
+    durationWeeks * (1 - autocorrelation) / (1 + autocorrelation);
+
   // Standard error of the difference in means
-  // After aggregating over weeks, the per-geo variance is sigma^2 / T
-  // Then across geos: SE = sigma/sqrt(T) * sqrt(1/n_treat + 1/n_ctrl)
+  // Per-geo variance of the T-week mean is sigma^2 / T_eff
+  // Across geos: SE = sigma/sqrt(T_eff) * sqrt(1/n_treat + 1/n_ctrl)
   const se =
-    (sigmaWeekly / Math.sqrt(durationWeeks)) *
+    (sigmaWeekly / Math.sqrt(Math.max(effectiveWeeks, 0.5))) *
     Math.sqrt(1 / nTreatment + 1 / nControl);
 
   // Expected effect (absolute lift per geo per week)
@@ -301,6 +309,7 @@ export default function PowerCalculatorPage() {
   const [durationWeeks, setDurationWeeks] = useState(paramNum("weeks", 4));
   const [cv, setCv] = useState(paramNum("cv", 0.15));
   const [alpha, setAlpha] = useState(0.05);
+  const [autocorrelation, setAutocorrelation] = useState(0.5);
   const fromDesignQuality = searchParams.get("from") === "design-quality";
   const [showAdvanced, setShowAdvanced] = useState(fromDesignQuality);
   const { setContext } = useCopilot();
@@ -318,9 +327,10 @@ export default function PowerCalculatorPage() {
         liftPct,
         durationWeeks,
         cv,
-        alpha
+        alpha,
+        autocorrelation
       ),
-    [nTreatment, nControl, weeklyAvg, liftPct, durationWeeks, cv, alpha]
+    [nTreatment, nControl, weeklyAvg, liftPct, durationWeeks, cv, alpha, autocorrelation]
   );
 
   return (
@@ -424,6 +434,15 @@ export default function PowerCalculatorPage() {
                     step={0.01}
                     tooltip="The probability threshold for calling a result statistically significant. 0.05 (5%) is standard. Lower values are stricter but require more data. Higher values are more lenient but increase false positive risk."
                   />
+                  <SliderField
+                    label="Autocorrelation (ρ)"
+                    value={autocorrelation}
+                    onChange={setAutocorrelation}
+                    min={0.0}
+                    max={0.9}
+                    step={0.05}
+                    tooltip="How correlated a geo's weekly performance is with the prior week. Higher values mean weekly data within a geo is more predictable (less independent), reducing the effective sample size. 0.3 = low (volatile categories), 0.5 = typical (most e-commerce/retail), 0.7 = high (stable/subscription)."
+                  />
                 </div>
               )}
             </div>
@@ -525,6 +544,16 @@ export default function PowerCalculatorPage() {
             real effect. Industry standard is 80%. The{" "}
             <strong>minimum detectable effect (MDE)</strong> is the smallest
             lift your test can reliably detect at 80% power.
+          </p>
+          <p>
+            <strong>Autocorrelation adjustment:</strong> Weekly geo data is
+            serially correlated — a geo that performs well one week tends to
+            perform similarly the next. This means longer tests help, but not
+            as much as raw weeks suggest. We use the standard time-series
+            effective sample size formula: T<sub>eff</sub> = T &times;
+            (1 &minus; &rho;) / (1 + &rho;), where &rho; is the
+            autocorrelation. At &rho; = 0.5, a 12-week test yields ~4
+            effective independent observations per geo.
           </p>
         </CardContent>
       </Card>
