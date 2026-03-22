@@ -276,22 +276,34 @@ export default function LandingPage() {
               {[
                 ["Price", <strong key="p">Free</strong>, "$50–100K+/year", "Free (R skills required)"],
                 [
-                  "Synthetic control methods",
-                  <><span className="text-[#38A169] font-semibold">✓</span> Multi-model ensemble</>,
+                  "Statistical engine",
+                  <><span className="text-[#38A169] font-semibold">✓</span> SCM + Augmented SCM + DID ensemble</>,
                   <><span className="text-[#38A169] font-semibold">✓</span> Proprietary ensemble</>,
-                  <><span className="text-[#38A169] font-semibold">✓</span> Augmented SCM</>,
+                  <><span className="text-[#38A169] font-semibold">✓</span> Augmented SCM only</>,
+                ],
+                [
+                  "Causal inference method",
+                  <><span className="text-[#38A169] font-semibold">✓</span> Fisher permutation testing</>,
+                  <><span className="text-[#38A169] font-semibold">✓</span> Fisher permutation testing</>,
+                  <><span className="text-[#38A169] font-semibold">✓</span> Conformal inference</>,
                 ],
                 [
                   "Power analysis",
-                  <><span className="text-[#38A169] font-semibold">✓</span> Automated</>,
+                  <><span className="text-[#38A169] font-semibold">✓</span> Automated with MDE</>,
                   <><span className="text-[#38A169] font-semibold">✓</span> Automated</>,
                   <><span className="text-[#38A169] font-semibold">✓</span> Manual in R</>,
                 ],
                 [
-                  "AI copilot",
-                  <><span className="text-[#38A169] font-semibold">✓</span> Claude-powered</>,
-                  <><span className="text-[#A0AEC0]">—</span> Human strategist ($)</>,
-                  <span className="text-[#A0AEC0]">—</span>,
+                  "Pre-test validation",
+                  <><span className="text-[#38A169] font-semibold">✓</span> Correlation + design quality scoring</>,
+                  <><span className="text-[#38A169] font-semibold">✓</span> Design scoring</>,
+                  <><span className="text-[#A0AEC0]">—</span> Manual checks</>,
+                ],
+                [
+                  "Confidence intervals",
+                  <><span className="text-[#38A169] font-semibold">✓</span> 95% CI on all estimates</>,
+                  <><span className="text-[#38A169] font-semibold">✓</span> 95% CI</>,
+                  <><span className="text-[#38A169] font-semibold">✓</span> 95% CI</>,
                 ],
                 [
                   "Setup time",
@@ -301,12 +313,12 @@ export default function LandingPage() {
                 ],
                 [
                   "Methodology transparency",
-                  <><span className="text-[#38A169] font-semibold">✓</span> Open methods</>,
-                  <><span className="text-[#A0AEC0]">—</span> Proprietary</>,
+                  <><span className="text-[#38A169] font-semibold">✓</span> Fully open methods</>,
+                  <><span className="text-[#A0AEC0]">—</span> Proprietary black box</>,
                   <><span className="text-[#38A169] font-semibold">✓</span> Open source</>,
                 ],
               ].map((row, i) => (
-                <tr key={i} className={i < 5 ? "border-b border-[#E2E8F0]" : ""}>
+                <tr key={i} className={i < 7 ? "border-b border-[#E2E8F0]" : ""}>
                   <td className="px-7 py-4.5 font-medium text-[#0B1D2C]">{row[0]}</td>
                   <td className="px-7 py-4.5 bg-[#EBF4FF]">{row[1]}</td>
                   <td className="px-7 py-4.5">{row[2]}</td>
@@ -315,6 +327,16 @@ export default function LandingPage() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="mt-10 p-6 bg-[#F7FAFC] rounded-xl border border-[#E2E8F0] max-w-3xl mx-auto">
+          <p className="text-sm leading-relaxed text-[#4A5568]">
+            <span className="font-semibold text-[#0B1D2C]">Same math, same rigor.</span>{" "}
+            LiftProof implements the identical statistical frameworks used by paid geo-testing
+            platforms: synthetic control method (Abadie et al.), augmented SCM (Ben-Michael et al.),
+            and difference-in-differences — combined via an optimal-weight ensemble. Results include
+            Fisher-exact p-values and permutation-based confidence intervals, the gold standard
+            for causal inference in small-sample geo experiments.
+          </p>
         </div>
       </section>
 
