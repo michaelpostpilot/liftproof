@@ -294,6 +294,12 @@ export default function LandingPage() {
                   <><span className="text-[#38A169] font-semibold">✓</span> Manual in R</>,
                 ],
                 [
+                  "Guidance",
+                  <><span className="text-[#38A169] font-semibold">✓</span> AI copilot (free)</>,
+                  "Human strategist ($$$)",
+                  "Stack Overflow",
+                ],
+                [
                   "Setup time",
                   <strong key="t">Minutes</strong>,
                   "Days–weeks",
@@ -302,11 +308,11 @@ export default function LandingPage() {
                 [
                   "Transparency",
                   <><span className="text-[#38A169] font-semibold">✓</span> Open methods</>,
-                  <><span className="text-[#A0AEC0]">—</span> Proprietary</>,
+                  <><span className="text-[#A0AEC0]">—</span> Black box</>,
                   <><span className="text-[#38A169] font-semibold">✓</span> Open source</>,
                 ],
               ].map((row, i) => (
-                <tr key={i} className={i < 5 ? "border-b border-[#E2E8F0]" : ""}>
+                <tr key={i} className={i < 6 ? "border-b border-[#E2E8F0]" : ""}>
                   <td className="px-7 py-4.5 font-medium text-[#0B1D2C]">{row[0]}</td>
                   <td className="px-7 py-4.5 bg-[#EBF4FF]">{row[1]}</td>
                   <td className="px-7 py-4.5">{row[2]}</td>

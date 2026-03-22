@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Service for recommending optimal treatment/control geo splits.
 
@@ -8,7 +10,6 @@ Algorithm:
    synthetic-control-weighted control aggregate.
 3. Return the split that maximizes pre-period correlation and minimizes CV.
 """
-from __future__ import annotations
 
 import io
 import itertools

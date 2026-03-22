@@ -49,12 +49,12 @@ export function CopilotSidebar() {
       {!isOpen && (
         <button
           onClick={toggleOpen}
-          className="fixed right-6 bottom-6 z-50 w-12 h-12 rounded-full bg-[#0B1D2E] text-[#F8F6F1] shadow-lg hover:scale-105 transition-transform flex items-center justify-center"
+          className="fixed right-6 bottom-6 z-50 h-11 px-4 rounded-full bg-[#0B1D2E] text-[#F8F6F1] shadow-lg hover:scale-105 transition-transform flex items-center gap-2"
           aria-label="Open AI Copilot"
         >
           <svg
-            width="22"
-            height="22"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -66,6 +66,7 @@ export function CopilotSidebar() {
             <path d="M9 22h6" />
             <path d="M10 18h4" />
           </svg>
+          <span className="text-sm font-medium">AI Copilot</span>
         </button>
       )}
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
 Augmented Synthetic Control Method (Ben-Michael, Feller, Rothstein 2021).
 
@@ -11,7 +13,6 @@ Two variants:
     - AugmentedSCM("ridge"): uses RidgeCV for the outcome model
     - AugmentedSCM("elastic_net"): uses ElasticNetCV for the outcome model
 """
-from __future__ import annotations
 
 import numpy as np
 from sklearn.linear_model import ElasticNetCV, RidgeCV

@@ -174,6 +174,9 @@ export function CopilotProvider({ children }: { children: ReactNode }) {
                     m.id === assistantId ? { ...m, content: text } : m
                   )
                 );
+              } else if (event === "done") {
+                // Stream complete
+                break;
               } else if (event === "error") {
                 setMessages((prev) =>
                   prev.map((m) =>
@@ -182,6 +185,8 @@ export function CopilotProvider({ children }: { children: ReactNode }) {
                       : m
                   )
                 );
+                setIsStreaming(false);
+                return;
               }
             } catch {
               // skip
