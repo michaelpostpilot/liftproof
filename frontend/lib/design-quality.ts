@@ -485,7 +485,7 @@ function computeAutocorrelation(
   if (autocorrs.length === 0) return 0.5; // fallback default
 
   // Clamp to [0, 0.95] — negative autocorrelation is rare and usually noise
-  return clamped;
+  return Math.max(0, Math.min(0.95, mean(autocorrs)));
 }
 
 function pearsonCorrelation(x: number[], y: number[]): number {
