@@ -319,7 +319,7 @@ export default function NewExperimentPage() {
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g., PostPilot Direct Mail Lift Test - Q1 2026"
+                  placeholder="e.g., CTV Lift Test — Q1 2026"
                 />
               </div>
               <div className="space-y-2">
@@ -327,7 +327,7 @@ export default function NewExperimentPage() {
                 <Textarea
                   value={hypothesis}
                   onChange={(e) => setHypothesis(e.target.value)}
-                  placeholder="e.g., PostPilot direct mail drives incremental revenue in treatment states"
+                  placeholder="e.g., CTV ads drive incremental revenue in treatment geos"
                   rows={2}
                 />
               </div>
