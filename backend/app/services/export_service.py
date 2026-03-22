@@ -21,16 +21,13 @@ class ExportService:
     def __init__(self):
         self.supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_SERVICE_ROLE_KEY)
 
-    def generate_pdf(self, experiment_id: str) -> bytes:
+    def generate_pdf(self, experiment_id: str, user_id: str | None = None) -> bytes:
         """Generate a PDF report for an experiment's results."""
-        # Fetch experiment and results
-        experiment = (
-            self.supabase.table("experiments")
-            .select("*")
-            .eq("id", experiment_id)
-            .single()
-            .execute()
-        ).data
+        # Fetch experiment and results (filtered by user_id for authorization)
+        query = self.supabase.table("experiments").select("*").eq("id", experiment_id)
+        if user_id:
+            query = query.eq("user_id", user_id)
+        experiment = query.single().execute().data
 
         result = (
             self.supabase.table("experiment_results")

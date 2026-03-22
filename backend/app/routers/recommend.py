@@ -49,6 +49,7 @@ async def recommend_geo_split(
             n_treatment=request.n_treatment,
             pre_period_start=request.pre_period_start,
             pre_period_end=request.pre_period_end,
+            user_id=user_id,
         )
     except Exception as e:
         logger.exception("Geo split recommendation failed")

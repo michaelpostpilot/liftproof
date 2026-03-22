@@ -240,8 +240,9 @@ function getGroupMeansByDate(
   const controlByDate: Record<string, number[]> = {};
 
   for (const row of input.rows) {
-    const dateStr = row[input.geoCol] ? row[input.dateCol] : null;
-    if (!dateStr) continue;
+    const dateStr = row[input.dateCol];
+    const geoVal = row[input.geoCol];
+    if (!dateStr || !geoVal) continue;
 
     const d = new Date(dateStr);
     if (isNaN(d.getTime()) || d < start || d > end) continue;

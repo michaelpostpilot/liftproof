@@ -54,7 +54,8 @@ export default function ExperimentDetailPage() {
         if (res) setResult(res as ExperimentResult);
       }
     }
-  }, [id, supabase]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   useEffect(() => {
     fetchData();

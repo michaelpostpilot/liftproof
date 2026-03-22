@@ -1,5 +1,6 @@
 import json
 import numpy as np
+import pandas as pd
 from typing import AsyncGenerator
 
 from app.services.data_service import DataService
@@ -23,7 +24,7 @@ class AnalysisService:
             # Step 1: Load data
             yield self._sse_event("progress", {"step": "loading_data", "progress": 0.0})
 
-            df, experiment, upload = self.data_service.load_experiment_data(experiment_id)
+            df, experiment, upload = self.data_service.load_experiment_data(experiment_id, user_id)
 
             yield self._sse_event("progress", {"step": "loading_data", "progress": 1.0})
 

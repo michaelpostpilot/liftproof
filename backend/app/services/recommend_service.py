@@ -30,15 +30,13 @@ class RecommendService:
         n_treatment: int,
         pre_period_start: str,
         pre_period_end: str,
+        user_id: str | None = None,
     ) -> dict:
-        # Load CSV
-        upload = (
-            self.data_service.supabase.table("csv_uploads")
-            .select("*")
-            .eq("id", csv_upload_id)
-            .single()
-            .execute()
-        )
+        # Load CSV (filtered by user_id for authorization)
+        query = self.data_service.supabase.table("csv_uploads").select("*").eq("id", csv_upload_id)
+        if user_id:
+            query = query.eq("user_id", user_id)
+        upload = query.single().execute()
         file_bytes = self.data_service.supabase.storage.from_("csv-uploads").download(
             upload.data["storage_path"]
         )

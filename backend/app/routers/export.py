@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import Response
 
 from app.dependencies import get_current_user
@@ -14,7 +14,10 @@ async def export_pdf(
 ):
     """Generate and download a PDF report for an experiment."""
     service = ExportService()
-    pdf_bytes = service.generate_pdf(experiment_id)
+    try:
+        pdf_bytes = service.generate_pdf(experiment_id, user_id)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
     return Response(
         content=pdf_bytes,

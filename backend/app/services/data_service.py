@@ -8,21 +8,18 @@ class DataService:
     def __init__(self):
         self.supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_SERVICE_ROLE_KEY)
 
-    def load_experiment_data(self, experiment_id: str) -> tuple[pd.DataFrame, dict, dict]:
+    def load_experiment_data(self, experiment_id: str, user_id: str | None = None) -> tuple[pd.DataFrame, dict, dict]:
         """
         Load CSV data and experiment config from Supabase.
 
         Returns:
             (dataframe, experiment_record, upload_record)
         """
-        # Fetch experiment record
-        experiment = (
-            self.supabase.table("experiments")
-            .select("*")
-            .eq("id", experiment_id)
-            .single()
-            .execute()
-        )
+        # Fetch experiment record (filtered by user_id if provided)
+        query = self.supabase.table("experiments").select("*").eq("id", experiment_id)
+        if user_id:
+            query = query.eq("user_id", user_id)
+        experiment = query.single().execute()
 
         # Fetch CSV upload record
         upload = (
