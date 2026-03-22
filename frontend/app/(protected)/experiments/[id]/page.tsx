@@ -66,7 +66,8 @@ export default function ExperimentDetailPage() {
           : undefined,
       });
     }
-  }, [experiment, result, setContext]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experiment?.id, experiment?.status, result?.p_value]);
 
   // Fetch experiment and results
   const fetchData = useCallback(async () => {

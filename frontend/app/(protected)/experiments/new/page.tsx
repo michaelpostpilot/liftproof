@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -115,7 +115,10 @@ export default function NewExperimentPage() {
     loadMeta();
   }, [selectedUpload]);
 
-  const controlGeos = availableGeos.filter((g) => !treatmentGeos.includes(g));
+  const controlGeos = useMemo(
+    () => availableGeos.filter((g) => !treatmentGeos.includes(g)),
+    [availableGeos, treatmentGeos]
+  );
 
   const { setContext } = useCopilot();
 
@@ -136,16 +139,16 @@ export default function NewExperimentPage() {
           }
         : undefined,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    selectedUpload,
+    selectedUpload?.id,
     primaryKpi,
-    treatmentGeos,
-    controlGeos,
+    treatmentGeos.length,
+    controlGeos.length,
     prePeriodStart,
     prePeriodEnd,
     treatmentStart,
     treatmentEnd,
-    setContext,
   ]);
 
   async function handleSubmit(e: React.FormEvent) {
